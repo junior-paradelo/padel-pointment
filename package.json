@@ -1,21 +1,30 @@
 {
   "name": "padel-pointment",
   "version": "0.0.1",
-  "description": "",
+  "description": "Aplicación para gestionar reservas de pistas de pádel",
   "keywords": [
-    "expressjs"
+    "expressjs",
+    "padel",
+    "reservas",
+    "booking"
   ],
   "license": "MIT",
   "author": "Junior Paradelo <juniorparadelo@gmail.com>",
   "type": "commonjs",
-  "main": "app.js",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "node --watch src/app.js",
-    "start": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/junior-paradelo/padel-pointment.git"
   }
 }
