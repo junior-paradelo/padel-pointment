@@ -1,0 +1,21 @@
+{
+  "name": "padel-pointment",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "expressjs"
+  ],
+  "license": "MIT",
+  "author": "Junior Paradelo <juniorparadelo@gmail.com>",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node --watch app.js",
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0"
+  }
+}
