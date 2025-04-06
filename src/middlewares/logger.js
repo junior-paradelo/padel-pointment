@@ -1,3 +1,4 @@
+// This middleware logs the request method, URL, IP address, and response status code along with the duration of the request.
 const loggerMiddleware = (req, res, next) => {
     const timestamp = new Date().toISOString();
     const { method, url, ip } = req;
