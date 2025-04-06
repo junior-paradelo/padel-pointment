@@ -1,6 +1,6 @@
 # 🎾 Padel-Pointment
 
-A modern web application for booking padel courts in your city.
+A modern REST API web application for booking padel courts in your city.
 
 ## 📝 Project Description
 
@@ -18,13 +18,18 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
 -   **Node.js** - JavaScript runtime
 -   **Express.js** - Web framework
 -   **PostgreSQL** - Database
--   **Prisma ORM** - Database toolkit for TypeScript and Node.js
+-   **Prisma ORM** - Database toolkit for Node.js
+-   **bcryptjs** - Password hashing library
+-   **jsonwebtoken** - JWT implementation for authentication
+-   **compression** - Response compression middleware
+-   **response-time** - Response time header middleware
 
 ### 🔧 Development Tools
 
 -   **ESLint** - Code linting
 -   **dotenv** - Environment variable management
 -   **Prisma Migrations** - Database schema management
+-   **Node.js Watch Mode** - Hot reloading for development
 
 ## 🚀 Getting Started
 
@@ -70,10 +75,21 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
     npm run dev
     ```
 
-## 📄 License
+### 📦 Dependencies
 
-MIT
+```json
+"dependencies": {
+    "@prisma/client": "^6.5.0",
+    "bcryptjs": "^3.0.2",
+    "compression": "^1.8.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.14.1",
+    "response-time": "^2.3.3"
+}
+```
 
 ## 👨‍💻 Author
 
-Junior Paradelo - [juniorparadelo@gmail.com](mailto:juniorparadelo@gmail.com)
+Junior Paradelo - [juniorparadelo@gmail.com](mailto:juniorparadelo@gmail.com) - [GitHub](https://github.com/junior-paradelo)

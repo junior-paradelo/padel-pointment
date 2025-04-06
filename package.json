@@ -1,6 +1,6 @@
 {
     "name": "padel-pointment",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Aplicación para gestionar reservas de pistas de pádel",
     "keywords": [
         "expressjs",
