@@ -1,5 +1,17 @@
 const { registerUser, loginUser } = require("../services/auth");
 
+/**
+ * Registers a new user in the system.
+ * @async
+ * @function register
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address
+ * @param {string} req.body.password - User's password
+ * @param {string} req.body.name - User's name
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Returns a promise that resolves when the registration is complete
+ */
 const register = async (req, res) => {
     const { email, password, name } = req.body;
     try {
@@ -10,6 +22,17 @@ const register = async (req, res) => {
     }
 };
 
+/**
+ * Authenticates a user and generates a JWT token.
+ * @async
+ * @function login
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address
+ * @param {string} req.body.password - User's password
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Returns a promise that resolves when the login is complete
+ */
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
