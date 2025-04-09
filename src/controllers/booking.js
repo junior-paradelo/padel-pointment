@@ -69,7 +69,7 @@ const deleteBookingController = async (req, res) => {
 // Get bookings by user ID
 const getBookingsByUserIdController = async (req, res) => {
     try {
-        const bookings = await getBookingsByUserId(req.params.userId);
+        const bookings = await getBookingsByUserId(Number(req.params.userId));
         res.status(200).json({ success: true, count: bookings.length, data: bookings });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
