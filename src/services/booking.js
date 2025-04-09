@@ -115,6 +115,41 @@ const getBookingsByUserId = async (userId) => {
     }
 };
 
+/**
+ * Retrieves all bookings for a specific court on a specific day.
+ * @async
+ * @function getBookingsByCourtAndDate
+ * @param {string|number} courtId - The ID of the court.
+ * @param {Date} date - The date for which to retrieve bookings.
+ * @returns {Promise<Array<Object>>} An array of booking objects for the specified court and date.
+ * @throws {Error} If there's an error during the retrieval process.
+ */
+const getBookingsByCourtAndDate = async (courtId, date) => {
+    try {
+        const startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const bookings = await prisma.booking.findMany({
+            where: {
+                courtId,
+                startTime: {
+                    gte: startOfDay,
+                    lte: endOfDay,
+                },
+            },
+            orderBy: {
+                startTime: "asc",
+            },
+        });
+        return bookings;
+    } catch (error) {
+        throw new Error("Error fetching bookings by court and date: " + error.message);
+    }
+};
+
 module.exports = {
     createBooking,
     getBookingById,
@@ -122,4 +157,5 @@ module.exports = {
     updateBooking,
     deleteBooking,
     getBookingsByUserId,
+    getBookingsByCourtAndDate,
 };

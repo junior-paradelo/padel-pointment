@@ -5,6 +5,7 @@ const {
     updateBooking,
     deleteBooking,
     getBookingsByUserId,
+    getBookingsByCourtAndDate,
 } = require("../services/booking");
 
 // Create a new booking
@@ -76,6 +77,18 @@ const getBookingsByUserIdController = async (req, res) => {
     }
 };
 
+// Get bookings by court and date
+const getBookingsByCourtAndDateController = async (req, res) => {
+    try {
+        const { courtId, date } = req.params;
+        const bookings = await getBookingsByCourtAndDate(Number(courtId), date);
+        res.status(200).json({ success: true, count: bookings.length, data: bookings });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// Update the module.exports to include the new controller
 module.exports = {
     createBooking: createBookingController,
     getBookingById: getBookingByIdController,
@@ -83,4 +96,5 @@ module.exports = {
     updateBooking: updateBookingController,
     deleteBooking: deleteBookingController,
     getBookingsByUserId: getBookingsByUserIdController,
+    getBookingsByCourtAndDate: getBookingsByCourtAndDateController,
 };

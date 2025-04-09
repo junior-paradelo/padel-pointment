@@ -113,7 +113,42 @@ async function main() {
             courtId: createdCourts[3].id, // Premium Court
             price: 30.0,
             startTime: new Date(nextDay.setHours(12, 0, 0, 0)),
-            endTime: new Date(nextDay.setHours(14, 0, 0, 0)),
+            endTime: new Date(nextDay.setHours(13, 30, 0, 0)),
+        },
+        {
+            userId: createdUsers[1].id, // John Doe
+            courtId: createdCourts[2].id, // South Court
+            price: 15.0,
+            startTime: new Date(today.setHours(9, 0, 0, 0)),
+            endTime: new Date(today.setHours(10, 30, 0, 0)),
+        },
+        {
+            userId: createdUsers[2].id, // Jane Smith
+            courtId: createdCourts[2].id, // South Court
+            price: 15.0,
+            startTime: new Date(today.setHours(10, 30, 0, 0)),
+            endTime: new Date(today.setHours(12, 0, 0, 0)),
+        },
+        {
+            userId: createdUsers[1].id, // John Doe
+            courtId: createdCourts[2].id, // South Court
+            price: 15.0,
+            startTime: new Date(today.setHours(12, 0, 0, 0)),
+            endTime: new Date(today.setHours(13, 30, 0, 0)),
+        },
+        {
+            userId: createdUsers[2].id, // Jane Smith
+            courtId: createdCourts[2].id, // South Court
+            price: 15.0,
+            startTime: new Date(today.setHours(13, 30, 0, 0)),
+            endTime: new Date(today.setHours(15, 0, 0, 0)),
+        },
+        {
+            userId: createdUsers[1].id, // John Doe
+            courtId: createdCourts[2].id, // South Court
+            price: 15.0,
+            startTime: new Date(today.setHours(15, 0, 0, 0)),
+            endTime: new Date(today.setHours(16, 30, 0, 0)),
         },
     ];
 
