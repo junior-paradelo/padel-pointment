@@ -9,7 +9,6 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
 -   View available courts
 -   Make court reservations
 -   Manage their bookings
--   Track their playing history
 
 ## 🛠️ Technologies Used
 
@@ -79,7 +78,7 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
 
 ```json
 "dependencies": {
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "^6.6.0",
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.0",
     "dotenv": "^16.4.7",
@@ -88,6 +87,60 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
     "pg": "^8.14.1",
     "response-time": "^2.3.3"
 }
+```
+
+## 📜 Available Scripts
+
+```json
+"scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "lint": "eslint src --fix",
+    "migrate": "prisma migrate dev",
+    "seed": "prisma db seed",
+}
+```
+
+-   `npm start` - Run the server in production mode
+-   `npm run dev` - Run the server with hot-reloading for development
+-   `npm run lint` - Lint and fix code style issues
+-   `npm run migrate` - Run Prisma migrations
+-   `npm run seed` - Seed the database with initial data
+
+## 📁 Project Structure
+
+```
+padel-pointment/
+├── prisma/                  # Prisma schema and migrations
+│   ├── migrations/          # Database migrations
+│   ├── schema.prisma        # Prisma schema definition
+│   └── seed.js              # Database seeding script
+├── src/
+│   ├── controllers/         # Request controllers
+│   │   ├── authController.js
+│   │   ├── courtController.js
+│   │   └── bookingController.js
+│   ├── middlewares/         # Express middlewares
+│   │   ├── auth.js          # Authentication middleware
+│   │   └── validation.js    # Input validation middleware
+│   ├── models/              # Data models
+│   │   └── index.js         # Model exports
+│   ├── routes/              # API routes
+│   │   ├── auth.js
+│   │   ├── courts.js
+│   │   ├── bookings.js
+│   │   └── index.js         # Route registration
+│   ├── utils/               # Utility functions
+│   │   ├── errors.js        # Error handling
+│   │   └── logger.js        # Logging utilities
+│   ├── app.js              # Express app setup
+│   └── server.js           # Server entry point
+├── .env                    # Environment variables
+├── .env-example            # Example environment variables
+├── .eslintrc.js           # ESLint configuration
+├── .gitignore             # Git ignore file
+├── package.json           # Package dependencies
+└── README.md              # Project documentation
 ```
 
 ## 👨‍💻 Author

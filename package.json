@@ -1,11 +1,11 @@
 {
     "name": "padel-pointment",
-    "version": "0.0.2",
-    "description": "Aplicación para gestionar reservas de pistas de pádel",
+    "version": "0.0.3",
+    "description": "Application for managing padel court bookings",
     "keywords": [
         "expressjs",
         "padel",
-        "reservas",
+        "court",
         "booking"
     ],
     "license": "MIT",
