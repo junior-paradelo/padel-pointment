@@ -40,7 +40,7 @@ async function main() {
             data: user,
         });
         createdUsers.push(createdUser);
-        console.log(`User created: ${createdUser.name} (${createdUser.email})`);
+        console.table(createdUsers);
     }
 
     // 2. Create courts
@@ -88,67 +88,25 @@ async function main() {
 
     const bookings = [
         {
-            userId: createdUsers[1].id, // John Doe
-            courtId: createdCourts[0].id, // Central Court
-            price: 20.0,
-            startTime: new Date(new Date().setHours(10, 0, 0, 0)),
-            endTime: new Date(new Date().setHours(11, 30, 0, 0)),
+            userId: createdUsers[1].id,
+            courtId: createdCourts[0].id,
+            price: 20,
+            startTime: new Date(today.setHours(10, 0, 0)),
+            endTime: new Date(today.setHours(11, 0, 0)),
         },
         {
-            userId: createdUsers[2].id, // Jane Smith
-            courtId: createdCourts[1].id, // North Court
-            price: 15.0,
-            startTime: new Date(tomorrow.setHours(16, 0, 0, 0)),
-            endTime: new Date(tomorrow.setHours(17, 30, 0, 0)),
+            userId: createdUsers[2].id,
+            courtId: createdCourts[1].id,
+            price: 25,
+            startTime: new Date(tomorrow.setHours(14, 0, 0)),
+            endTime: new Date(tomorrow.setHours(15, 0, 0)),
         },
         {
-            userId: createdUsers[1].id, // John Doe
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(nextDay.setHours(18, 0, 0, 0)),
-            endTime: new Date(nextDay.setHours(19, 30, 0, 0)),
-        },
-        {
-            userId: createdUsers[2].id, // Jane Smith
-            courtId: createdCourts[3].id, // Premium Court
-            price: 30.0,
-            startTime: new Date(nextDay.setHours(12, 0, 0, 0)),
-            endTime: new Date(nextDay.setHours(13, 30, 0, 0)),
-        },
-        {
-            userId: createdUsers[1].id, // John Doe
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(today.setHours(9, 0, 0, 0)),
-            endTime: new Date(today.setHours(10, 30, 0, 0)),
-        },
-        {
-            userId: createdUsers[2].id, // Jane Smith
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(today.setHours(10, 30, 0, 0)),
-            endTime: new Date(today.setHours(12, 0, 0, 0)),
-        },
-        {
-            userId: createdUsers[1].id, // John Doe
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(today.setHours(12, 0, 0, 0)),
-            endTime: new Date(today.setHours(13, 30, 0, 0)),
-        },
-        {
-            userId: createdUsers[2].id, // Jane Smith
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(today.setHours(13, 30, 0, 0)),
-            endTime: new Date(today.setHours(15, 0, 0, 0)),
-        },
-        {
-            userId: createdUsers[1].id, // John Doe
-            courtId: createdCourts[2].id, // South Court
-            price: 15.0,
-            startTime: new Date(today.setHours(15, 0, 0, 0)),
-            endTime: new Date(today.setHours(16, 30, 0, 0)),
+            userId: createdUsers[1].id,
+            courtId: createdCourts[2].id,
+            price: 30,
+            startTime: new Date(nextDay.setHours(9, 30, 0)),
+            endTime: new Date(nextDay.setHours(10, 30, 0)),
         },
     ];
 

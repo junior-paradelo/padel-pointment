@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const BookingDTO = require("../utils/dto/BookingDTO");
+
 /**
  * Creates a new booking in the database.
  * @async
@@ -33,7 +35,7 @@ const getBookingById = async (id) => {
         const booking = await prisma.booking.findUnique({
             where: { id },
         });
-        return booking;
+        return new BookingDTO(booking);
     } catch (error) {
         throw new Error("Error fetching booking: " + error.message);
     }
@@ -49,7 +51,9 @@ const getBookingById = async (id) => {
 const getAllBookings = async () => {
     try {
         const bookings = await prisma.booking.findMany();
-        return bookings;
+        return bookings.map((booking) => {
+            return new BookingDTO(booking);
+        });
     } catch (error) {
         throw new Error("Error fetching bookings: " + error.message);
     }
@@ -70,7 +74,7 @@ const updateBooking = async (id, data) => {
             where: { id },
             data,
         });
-        return booking;
+        return new BookingDTO(booking);
     } catch (error) {
         throw new Error("Error updating booking: " + error.message);
     }
@@ -109,7 +113,9 @@ const getBookingsByUserId = async (userId) => {
         const bookings = await prisma.booking.findMany({
             where: { userId },
         });
-        return bookings;
+        return bookings.map((booking) => {
+            return new BookingDTO(booking);
+        });
     } catch (error) {
         throw new Error("Error fetching bookings by user ID: " + error.message);
     }
@@ -144,7 +150,9 @@ const getBookingsByCourtAndDate = async (courtId, date) => {
                 startTime: "asc",
             },
         });
-        return bookings;
+        return bookings.map((booking) => {
+            return new BookingDTO(booking);
+        });
     } catch (error) {
         throw new Error("Error fetching bookings by court and date: " + error.message);
     }
@@ -165,7 +173,9 @@ const getBookingsByCourt = async (courtId) => {
                 startTime: "asc",
             },
         });
-        return bookings;
+        return bookings.map((booking) => {
+            return new BookingDTO(booking);
+        });
     } catch (error) {
         throw new Error("Error fetching bookings by court ID: " + error.message);
     }

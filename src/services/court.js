@@ -1,13 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const CourtDTO = require("../utils/dto/CourtDTO");
 /**
  * Retrieves all courts from the database
  * @returns {Promise<Array>} Array of court objects
  */
 const getCourts = async () => {
     try {
-        return await prisma.court.findMany();
+        return (await prisma.court.findMany()).map((court) => {
+            return new CourtDTO(court);
+        });
     } catch (error) {
         throw new Error(`Failed to get courts: ${error.message}`);
     }
@@ -20,9 +23,13 @@ const getCourts = async () => {
  */
 const getCourtById = async (id) => {
     try {
-        return await prisma.court.findUnique({
-            where: { id: Number(id) },
-        });
+        return await prisma.court
+            .findUnique({
+                where: { id: Number(id) },
+            })
+            .map((court) => {
+                return new CourtDTO(court);
+            });
     } catch (error) {
         throw new Error(`Failed to get court by ID: ${error.message}`);
     }
@@ -36,10 +43,14 @@ const getCourtById = async (id) => {
  */
 const updateCourt = async (id, data) => {
     try {
-        return await prisma.court.update({
-            where: { id: Number(id) },
-            data,
-        });
+        return await prisma.court
+            .update({
+                where: { id: Number(id) },
+                data,
+            })
+            .map((court) => {
+                return new CourtDTO(court);
+            });
     } catch (error) {
         throw new Error(`Failed to update court: ${error.message}`);
     }
