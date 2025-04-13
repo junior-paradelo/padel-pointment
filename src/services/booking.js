@@ -149,6 +149,27 @@ const getBookingsByCourtAndDate = async (courtId, date) => {
         throw new Error("Error fetching bookings by court and date: " + error.message);
     }
 };
+/**
+ * Retrieves all bookings associated with a specific court.
+ * @async
+ * @function getBookingsByCourt
+ * @param {string|number} courtId - The ID of the court whose bookings are to be retrieved.
+ * @returns {Promise<Array<Object>>} An array of booking objects associated with the specified court.
+ * @throws {Error} If there's an error during the retrieval process.
+ */
+const getBookingsByCourt = async (courtId) => {
+    try {
+        const bookings = await prisma.booking.findMany({
+            where: { courtId },
+            orderBy: {
+                startTime: "asc",
+            },
+        });
+        return bookings;
+    } catch (error) {
+        throw new Error("Error fetching bookings by court ID: " + error.message);
+    }
+};
 
 module.exports = {
     createBooking,
@@ -158,4 +179,5 @@ module.exports = {
     deleteBooking,
     getBookingsByUserId,
     getBookingsByCourtAndDate,
+    getBookingsByCourt,
 };

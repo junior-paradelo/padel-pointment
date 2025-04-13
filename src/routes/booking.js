@@ -7,6 +7,7 @@ const {
     deleteBooking,
     getBookingsByUserId,
     getBookingsByCourtAndDate,
+    getBookingsByCourt,
 } = require("../controllers/booking");
 
 const router = Router();
@@ -18,5 +19,6 @@ router.patch("/:id", updateBooking);
 router.delete("/:id", deleteBooking);
 router.get("/user/:userId", getBookingsByUserId);
 router.get("/court/:courtId/date/:date", getBookingsByCourtAndDate);
+router.get("/court/:courtId", getBookingsByCourt);
 
 module.exports = router;
