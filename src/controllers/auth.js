@@ -1,4 +1,4 @@
-const { registerUser, loginUser } = require("../services/auth");
+const { registerUser, loginUser, logoutUser } = require("../services/auth");
 
 /**
  * Registers a new user in the system.
@@ -37,10 +37,34 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         const token = await loginUser(email, password);
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200)
+            .cookie("access_token", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production", // Set to true in production
+                sameSite: "strict", // CSRF protection
+                maxAge: 60 * 60 * 1000, // 1 hour
+            })
+            .json({ message: "Login successful", token });
     } catch (error) {
         res.status(401).json({ error: error.message });
     }
 };
 
-module.exports = { register, login };
+/**
+ * Logs out the user by clearing the JWT token.
+ * @async
+ * @function logout
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Returns a promise that resolves when the logout is complete
+ */
+const logout = (req, res) => {
+    try {
+        logoutUser(req, res);
+        res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { register, login, logout };

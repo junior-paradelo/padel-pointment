@@ -26,10 +26,14 @@ const loginUser = async (email, password) => {
     if (!isPasswordValid) {
         throw new Error("Invalid email or password");
     }
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.ACCESS_TOKEN_SECRET, {
+    const token = jwt.sign({ uid: user.uid, name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "1h",
     });
     return token;
 };
 
-module.exports = { registerUser, loginUser };
+const logoutUser = (req, res) => {
+    res.clearCookie("access_token");
+};
+
+module.exports = { registerUser, loginUser, logoutUser };
