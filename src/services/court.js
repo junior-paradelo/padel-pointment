@@ -23,13 +23,10 @@ const getCourts = async () => {
  */
 const getCourtById = async (id) => {
     try {
-        return await prisma.court
-            .findUnique({
-                where: { id: Number(id) },
-            })
-            .map((court) => {
-                return new CourtDTO(court);
-            });
+        const result = await prisma.court.findUnique({
+            where: { id: Number(id) },
+        });
+        return result ? new CourtDTO(result) : null;
     } catch (error) {
         throw new Error(`Failed to get court by ID: ${error.message}`);
     }
@@ -43,14 +40,11 @@ const getCourtById = async (id) => {
  */
 const updateCourt = async (id, data) => {
     try {
-        return await prisma.court
-            .update({
-                where: { id: Number(id) },
-                data,
-            })
-            .map((court) => {
-                return new CourtDTO(court);
-            });
+        const result = await prisma.court.update({
+            where: { id: Number(id) },
+            data,
+        });
+        return result ? new CourtDTO(result) : null;
     } catch (error) {
         throw new Error(`Failed to update court: ${error.message}`);
     }
@@ -63,11 +57,13 @@ const updateCourt = async (id, data) => {
  */
 const deleteCourt = async (id) => {
     try {
-        return await prisma.court.delete({
+        await prisma.court.delete({
             where: { id: Number(id) },
         });
+        return true;
     } catch (error) {
-        throw new Error(`Failed to delete court: ${error.message}`);
+        console.log(`Failed to delete court: ${error.message}`);
+        return false;
     }
 };
 

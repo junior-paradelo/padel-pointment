@@ -1,4 +1,5 @@
 const { getCourts, getCourtById, updateCourt, deleteCourt } = require("../services/court");
+const { validateCourt } = require("../schemas/court");
 
 /**
  * Get all courts
@@ -42,8 +43,8 @@ const getSingleCourt = async (req, res) => {
 const modifyCourt = async (req, res) => {
     try {
         const { id } = req.params;
-        const updates = req.body;
-        const updatedCourt = await updateCourt(id, updates);
+        const data = validateCourt(req.body);
+        const updatedCourt = await updateCourt(id, data);
 
         if (!updatedCourt) {
             return res.status(404).json({ message: "Court not found" });
