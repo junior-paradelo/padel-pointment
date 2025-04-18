@@ -78,15 +78,17 @@ Padel-Pointment is a platform that allows users to easily book padel courts in t
 
 ```json
 "dependencies": {
-    "@prisma/client": "^6.6.0",
-    "bcryptjs": "^3.0.2",
-    "compression": "^1.8.0",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.14.1",
-    "response-time": "^2.3.3"
-}
+     "@prisma/client": "^6.6.0",
+        "bcryptjs": "^3.0.2",
+        "compression": "^1.8.0",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "pg": "^8.14.1",
+        "response-time": "^2.3.3",
+        "zod": "3.24.3"
 ```
 
 ## 📜 Available Scripts

@@ -1,7 +1,7 @@
 {
     "name": "padel-pointment",
-    "version": "0.0.3",
-    "description": "Application for managing padel court bookings",
+    "version": "0.0.4",
+    "description": "REST API Application for managing padel court bookings",
     "keywords": [
         "expressjs",
         "padel",
