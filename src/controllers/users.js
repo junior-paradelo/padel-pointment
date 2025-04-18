@@ -1,4 +1,5 @@
 const { getUsers, getUserById, updateUser, deleteUser } = require("../services/users");
+const { validateUser } = require("../schemas/users");
 
 /**
  * Controller function to retrieve all users.
@@ -56,9 +57,9 @@ const getUserByIdController = async (req, res) => {
  */
 const updateUserController = async (req, res) => {
     try {
-        const { id } = req.params;
-        const userData = req.body;
-        const updatedUser = await updateUser(id, userData);
+        const uid = req.params.id;
+        const userData = validateUser(req.body);
+        const updatedUser = await updateUser(uid, userData);
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -81,8 +82,8 @@ const updateUserController = async (req, res) => {
  */
 const deleteUserController = async (req, res) => {
     try {
-        const { id } = req.params;
-        const deleted = await deleteUser(id);
+        const uid = req.params.id;
+        const deleted = await deleteUser(uid);
         if (!deleted) {
             return res.status(404).json({ message: "User not found" });
         }

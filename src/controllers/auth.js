@@ -14,8 +14,7 @@ const { validateUserLogin, validateUserRegister } = require("../schemas/users");
  * @returns {Promise<void>} - Returns a promise that resolves when the registration is complete
  */
 const register = async (req, res) => {
-    const { email, password, name } = req.body;
-    const data = validateUserRegister({ email, password, name });
+    const data = validateUserRegister(req.body);
     try {
         const user = await registerUser(data.email, data.password, data.name);
         res.status(201).json({ message: "User registered successfully", user });
@@ -36,8 +35,7 @@ const register = async (req, res) => {
  * @returns {Promise<void>} - Returns a promise that resolves when the login is complete
  */
 const login = async (req, res) => {
-    const { email, password } = req.body;
-    const data = validateUserLogin({ email, password });
+    const data = validateUserLogin(req.body);
     try {
         const token = await loginUser(data.email, data.password);
         res.status(200)
