@@ -1,4 +1,5 @@
 const { registerUser, loginUser, logoutUser } = require("../services/auth");
+const { validateUserLogin, validateUserRegister } = require("../schemas/users");
 
 /**
  * Registers a new user in the system.
@@ -14,8 +15,9 @@ const { registerUser, loginUser, logoutUser } = require("../services/auth");
  */
 const register = async (req, res) => {
     const { email, password, name } = req.body;
+    const data = validateUserRegister({ email, password, name });
     try {
-        const user = await registerUser(email, password, name);
+        const user = await registerUser(data.email, data.password, data.name);
         res.status(201).json({ message: "User registered successfully", user });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -35,8 +37,9 @@ const register = async (req, res) => {
  */
 const login = async (req, res) => {
     const { email, password } = req.body;
+    const data = validateUserLogin({ email, password });
     try {
-        const token = await loginUser(email, password);
+        const token = await loginUser(data.email, data.password);
         res.status(200)
             .cookie("access_token", token, {
                 httpOnly: true,

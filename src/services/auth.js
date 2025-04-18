@@ -1,3 +1,4 @@
+const UserDTO = require("../utils/dto/UserDTO");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { PrismaClient } = require("@prisma/client");
@@ -5,14 +6,21 @@ const prisma = new PrismaClient();
 
 const registerUser = async (email, password, name) => {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-        data: {
-            email,
-            password: hashedPassword,
-            name,
-        },
-    });
-    return user;
+    try {
+        const user = await prisma.user.create({
+            data: {
+                email,
+                password: hashedPassword,
+                name,
+            },
+        });
+        return new UserDTO(user);
+    } catch (error) {
+        if (error.code === "P2002") {
+            throw new Error("Email already exists");
+        }
+        throw new Error("Error creating user");
+    }
 };
 
 const loginUser = async (email, password) => {
