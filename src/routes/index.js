@@ -9,7 +9,7 @@ const router = Router();
 
 router.use("/auth", authRouter);
 router.use("/users", authMiddleware, usersRouter);
-router.use("/court", authMiddleware, courtRouter);
+router.use("/court", courtRouter);
 router.use("/booking", authMiddleware, bookingRouter);
 
 module.exports = router;
