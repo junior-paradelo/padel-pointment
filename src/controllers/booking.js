@@ -8,14 +8,17 @@ const {
     getBookingsByCourtAndDate,
     getBookingsByCourt,
 } = require("../services/booking");
+const { validateBooking, validateUpdateBooking } = require("../schemas/booking");
 
 // Create a new booking
 const createBookingController = async (req, res) => {
     try {
-        const booking = await createBooking(req.body);
+        const data = validateBooking(req.body);
+        const booking = await createBooking(data);
         res.status(201).json({ success: true, data: booking });
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        console.error("Error creating booking:", error);
+        res.status(422).json({ success: false, message: "Unprocessable entity" });
     }
 };
 
@@ -45,7 +48,8 @@ const getAllBookingsController = async (req, res) => {
 // Update booking
 const updateBookingController = async (req, res) => {
     try {
-        const booking = await updateBooking(Number(req.params.id), req.body);
+        const data = validateUpdateBooking(req.body);
+        const booking = await updateBooking(Number(req.params.id), data);
         if (!booking) {
             return res.status(404).json({ success: false, message: "Booking not found" });
         }
@@ -88,8 +92,8 @@ const getBookingsByCourtAndDateController = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
-// Get bookings by court
 
+// Get bookings by court
 const getBookingsByCourtController = async (req, res) => {
     try {
         const { courtId } = req.params;
