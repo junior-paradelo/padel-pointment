@@ -43,7 +43,7 @@ const login = async (req, res) => {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production", // Set to true in production
                 sameSite: "strict", // CSRF protection
-                maxAge: 60 * 5 * 1000, // 5 minutes
+                maxAge: 60 * 1 * 1000, // 1 minute
             })
             .cookie(process.env.REFRESH_TOKEN_NAME, refreshToken, {
                 httpOnly: true,

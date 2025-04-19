@@ -34,8 +34,14 @@ const loginUser = async (email, password) => {
     if (!isPasswordValid) {
         throw new Error("Invalid email or password");
     }
+
+    // Clear old refresh tokens
+    await prisma.userRefreshToken.deleteMany({
+        where: { userId: user.uid },
+    });
+
     const accessToken = jwt.sign({ uid: user.uid }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "5m",
+        expiresIn: "1m",
     });
     const refreshToken = jwt.sign({ uid: user.uid }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: "1d",
@@ -44,6 +50,7 @@ const loginUser = async (email, password) => {
         data: {
             userId: user.uid,
             token: refreshToken,
+            expiredAt: new Date(Date.now() + 60 * 60 * 24 * 1000), // 1 day
         },
     });
     return { accessToken, refreshToken };
@@ -69,7 +76,7 @@ const refreshToken = async (req, res) => {
                 return res.status(403).json({ error: "Forbidden" });
             }
             newAccessToken = jwt.sign({ uid: userConnection.userId }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: "5m",
+                expiresIn: "1m",
             });
         });
         return { accessToken: newAccessToken };
