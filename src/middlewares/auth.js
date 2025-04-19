@@ -1,4 +1,3 @@
-// This middleware checks if the request has a valid JWT token in the Authorization header.
 const jwt = require("jsonwebtoken");
 const UserDTO = require("../utils/dto/UserDTO");
 
