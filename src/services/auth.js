@@ -70,6 +70,13 @@ const refreshToken = async (req, res) => {
         if (!userConnection) {
             return res.status(403).json({ error: "Forbidden" });
         }
+
+        // Check if the refresh token is expired
+        const now = new Date();
+        if (userConnection.expiredAt < now) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+
         let newAccessToken;
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if (err) {
