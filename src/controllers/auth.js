@@ -1,4 +1,4 @@
-const { registerUser, loginUser, logoutUser } = require("../services/auth");
+const { registerUser, loginUser, logoutUser, refreshToken } = require("../services/auth");
 const { validateUserLogin, validateUserRegister } = require("../schemas/users");
 
 /**
@@ -37,15 +37,21 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const data = validateUserLogin(req.body);
     try {
-        const token = await loginUser(data.email, data.password);
+        const { accessToken, refreshToken } = await loginUser(data.email, data.password);
         res.status(200)
-            .cookie("access_token", token, {
+            .cookie(process.env.ACCESS_TOKEN_NAME, accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production", // Set to true in production
                 sameSite: "strict", // CSRF protection
-                maxAge: 60 * 60 * 1000, // 1 hour
+                maxAge: 60 * 5 * 1000, // 5 minutes
             })
-            .json({ message: "Login successful", token });
+            .cookie(process.env.REFRESH_TOKEN_NAME, refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production", // Set to true in production
+                sameSite: "strict", // CSRF protection
+                maxAge: 60 * 60 * 24 * 1000, // 1 day
+            })
+            .json({ message: "Login successful", accessToken });
     } catch (error) {
         res.status(401).json({ error: error.message });
     }
@@ -68,4 +74,28 @@ const logout = (req, res) => {
     }
 };
 
-module.exports = { register, login, logout };
+/**
+ * Refreshes the JWT token.
+ * @async
+ * @function refresh
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Returns a promise that resolves when the token refresh is complete
+ */
+const refresh = async (req, res) => {
+    try {
+        const { accessToken } = await refreshToken(req, res);
+        res.status(200)
+            .cookie(process.env.ACCESS_TOKEN_NAME, accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production", // Set to true in production
+                sameSite: "strict", // CSRF protection
+                maxAge: 60 * 5 * 1000, // 5 minutes
+            })
+            .json({ message: "Token refreshed successfully", accessToken });
+    } catch (error) {
+        res.status(403).json({ error: error.message });
+    }
+};
+
+module.exports = { register, login, logout, refresh };

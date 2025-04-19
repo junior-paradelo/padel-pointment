@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const UserDTO = require("../utils/dto/UserDTO");
 
 function authenticateToken(req, res, next) {
-    const token = req.cookies.access_token || req.headers["authorization"]?.split(" ")[1];
+    const token = req.cookies[process.env.ACCESS_TOKEN_NAME];
     req.session = { user: null };
 
     if (!token) return res.sendStatus(401);

@@ -34,14 +34,48 @@ const loginUser = async (email, password) => {
     if (!isPasswordValid) {
         throw new Error("Invalid email or password");
     }
-    const token = jwt.sign({ uid: user.uid, name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "1h",
+    const accessToken = jwt.sign({ uid: user.uid }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "5m",
     });
-    return token;
+    const refreshToken = jwt.sign({ uid: user.uid }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: "1d",
+    });
+    await prisma.userRefreshToken.create({
+        data: {
+            userId: user.uid,
+            token: refreshToken,
+        },
+    });
+    return { accessToken, refreshToken };
 };
 
 const logoutUser = (req, res) => {
-    res.clearCookie("access_token");
+    res.clearCookie(process.env.ACCESS_TOKEN_NAME);
+    res.clearCookie(process.env.REFRESH_TOKEN_NAME);
 };
 
-module.exports = { registerUser, loginUser, logoutUser };
+const refreshToken = async (req, res) => {
+    if (req.cookies[process.env.REFRESH_TOKEN_NAME]) {
+        const refreshToken = req.cookies[process.env.REFRESH_TOKEN_NAME];
+        const userConnection = await prisma.userRefreshToken.findUnique({
+            where: { token: refreshToken },
+        });
+        if (!userConnection) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+        let newAccessToken;
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+            if (err) {
+                return res.status(403).json({ error: "Forbidden" });
+            }
+            newAccessToken = jwt.sign({ uid: userConnection.userId }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: "5m",
+            });
+        });
+        return { accessToken: newAccessToken };
+    } else {
+        throw new Error("No refresh token provided");
+    }
+};
+
+module.exports = { registerUser, loginUser, logoutUser, refreshToken };
