@@ -1,3 +1,4 @@
+// Middleware to authenticate JWT tokens
 const jwt = require("jsonwebtoken");
 const UserDTO = require("../utils/dto/UserDTO");
 
