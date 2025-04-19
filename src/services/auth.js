@@ -74,6 +74,9 @@ const refreshToken = async (req, res) => {
         // Check if the refresh token is expired
         const now = new Date();
         if (userConnection.expiredAt < now) {
+            await prisma.userRefreshToken.delete({
+                where: { token: refreshToken },
+            });
             return res.status(403).json({ error: "Forbidden" });
         }
 
